@@ -1,26 +1,96 @@
 #!/bin/bash
-# RAW URL BASE
+
+# --- Colors & Setup ---
+R='\e[1;31m'
+G='\e[1;32m'
+Y='\e[1;33m'
+B='\e[1;34m'
+C='\e[1;36m'
+W='\e[1;37m'
+NC='\e[0m'
+
+# GitHub Raw Base URL
 BASE="https://raw.githubusercontent.com/kingakesh732-jpg/neopro/main"
 
 clear
-echo -e "\e[1;31m   _  _  ____  _____  ____  _       ____  _____  _____"
-echo -e "  | \| || ___||  _  ||  _ \| |     / _  ||_   _||___  |"
-echo -e "  |    || ___|| |_| ||  __/| |___ | |_| |  | |   |___  |"
-echo -e "  |_|\_||____||_____||_|   |_____||_| |_|  |_|  |_____|\e[0m"
-echo -e "\e[1;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\e[0m"
-echo -e "           \e[1;32mMade By - NeoPlayz\e[0m"
-echo -e "\e[1;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\e[0m"
-echo -e "\e[1;31mA) Panel\e[0m"
-echo -e "\e[1;31mB) Vps Maker\e[0m"
-echo -e "\e[1;31mC) Tools\e[0m"
-echo -e "\e[1;31mE) Exit\e[0m"
-echo -e "\e[1;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\e[0m"
-read -p "Select → " main_opt
 
-case $main_opt in
-    A|a) bash <(curl -sL $BASE/panel.sh) ;;
-    B|b) bash <(curl -sL $BASE/vps_maker.sh) ;;
-    C|c) bash <(curl -sL $BASE/tools.sh) ;;
-    E|e) exit ;;
-    *) bash <(curl -sL $BASE/vps) ;;
-esac
+# --- Jishnu Style ASCII Banner ---
+echo -e "${R}"
+echo -e "      _  _  ____  _____  ____  _       ____  _____  _____"
+echo -e "     | \| || ___||  _  ||  _ \| |     / _  ||_   _||___  |"
+echo -e "     |    || ___|| |_| ||  __/| |___ | |_| |  | |   |___  |"
+echo -e "     |_|\_||____||_____||_|   |_____||_| |_|  |_|  |_____|"
+echo -e "${NC}"
+echo -e "${C}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+echo -e "                ${G}MADE BY - NEOPLAYZ${NC}"
+echo -e "${C}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+
+# --- Main Menu ---
+main_menu() {
+    echo -e "\n${Y}               ─── MAIN MENU ───${NC}"
+    echo -e "${R}  A)${W} Panel (Pterodactyl / Air-Link)${NC}"
+    echo -e "${R}  B)${W} VPS Maker (GitHub / IDX)${NC}"
+    echo -e "${R}  C)${W} Tools (Cloudflare / Database)${NC}"
+    echo -e "${R}  D)${W} System Edit (Coming Soon)${NC}"
+    echo -e "${R}  E)${W} Exit${NC}"
+    echo -e "${C}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+    read -p "  Select Option → " opt
+
+    case $opt in
+        A|a) panel_menu ;;
+        B|b) vps_menu ;;
+        C|c) tools_menu ;;
+        E|e) exit 0 ;;
+        *) clear; main_menu ;;
+    esac
+}
+
+# --- Panel Menu ---
+panel_menu() {
+    clear
+    echo -e "${R}               ─── PANELS MENU ───${NC}"
+    echo -e "${G}  1)${W} Pterodactyl Panel Installer${NC}"
+    echo -e "${G}  2)${W} Air-Link Panel PRO${NC}"
+    echo -e "${G}  3)${W} Back to Main Menu${NC}"
+    read -p "  Select → " p_opt
+    case $p_opt in
+        1) bash <(curl -sL https://pterodactyl-installer.se) ;;
+        2) bash <(curl -sL $BASE/panel.sh) ;; # Calls your airlink script
+        3) clear; main_menu ;;
+    esac
+}
+
+# --- VPS Maker Menu ---
+vps_menu() {
+    clear
+    echo -e "${R}               ─── VPS MAKER ───${NC}"
+    echo -e "${Y}  1)${W} GitHub VPS Maker${NC}"
+    echo -e "${Y}  2)${W} IDX Tool Setup${NC}"
+    echo -e "${Y}  3)${W} IDX VPS Maker${NC}"
+    echo -e "${Y}  4)${W} Back to Main Menu${NC}"
+    read -p "  Select Option [1-4] : " v_opt
+    case $v_opt in
+        4) clear; main_menu ;;
+        *) echo -e "${B}Launching VPS Tools...${NC}"; sleep 2; main_menu ;;
+    esac
+}
+
+# --- Tools Menu ---
+tools_menu() {
+    clear
+    echo -e "${R}               ─── HOSTING MANAGER ───${NC}"
+    echo -e "${G}  1)${W} Wings Installation${NC}"
+    echo -e "${G}  2)${W} Cloudflare Setup${NC}"
+    echo -e "${G}  3)${W} Database (MariaDB) Setup${NC}"
+    echo -e "${G}  4)${W} Tailscale (Install + Up)${NC}"
+    echo -e "${G}  0)${W} Back to Main Menu${NC}"
+    read -p "  Select an option [0-4]: " t_opt
+    case $t_opt in
+        0) clear; main_menu ;;
+        1) bash <(curl -sL https://pterodactyl-installer.se) ;;
+        *) echo -e "${B}Setting up Tool...${NC}"; sleep 2; main_menu ;;
+    esac
+}
+
+# Start Script
+main_menu

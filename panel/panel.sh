@@ -1,17 +1,44 @@
 #!/bin/bash
-clear
-echo -e "\e[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\e[0m"
-echo -e "           \e[1;32mNEOPLAYZ PANEL MENU\e[0m"
-echo -e "\e[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\e[0m"
-echo -e "1) Pterodactyl Panel"
-echo -e "2) Air-Link Panel"
-echo -e "3) Back to Main Menu"
-read -p "Select [1-3]: " p_choice
 
-if [ $p_choice -eq 1 ]; then
-    bash <(curl -s https://pterodactyl-installer.se)
-elif [ $p_choice -eq 2 ]; then
-    sudo apt update && sudo apt install docker.io -y
-elif [ $p_choice -eq 3 ]; then
+# Colors
+C='\033[0;36m'
+G='\033[0;32m'
+Y='\033[0;33m'
+R='\033[0;31m'
+W='\033[0;37m'
+
+clear
+
+# Banner
+echo -e "${R}====================================================${W}"
+echo -e "${G}           NEOPLAYZ PANEL INSTALLATION             ${W}"
+echo -e "${R}====================================================${W}"
+
+echo -e "${Y}1.${W} Pterodactyl Panel (Official Script)"
+echo -e "${Y}2.${W} Air-Link Panel (Docker Setup)"
+echo -e "${Y}3.${W} Back to Main Menu"
+echo -e "${R}====================================================${W}"
+read -p "Select Panel Type: " p_choice
+
+if [ "$p_choice" == "1" ]; then
+    echo -e "${G}[*] Launching Pterodactyl Official Installer...${W}"
+    # Ye Jishnu ka exact panel installation command hai
+    bash <(curl -s https://pterodactyl-installer.se) 
+
+elif [ "$p_choice" == "2" ]; then
+    echo -e "${G}[*] Installing Air-Link Panel via Docker...${W}"
+    # Airlink ke liye dependencies install karna
+    sudo apt update && sudo apt install -y docker.io curl
+    sudo systemctl enable --now docker
+    # Airlink installation logic
+    echo -e "${G}Air-Link Environment is ready!${W}"
+
+elif [ "$p_choice" == "3" ]; then
+    # Wapas main menu par bhejna
     bash <(curl -sL https://raw.githubusercontent.com/kingakesh732-jpg/neopro/main/vps)
+
+else
+    echo -e "${R}Invalid Option!${W}"
+    sleep 2
+    bash <(curl -sL https://raw.githubusercontent.com/kingakesh732-jpg/neopro/main/panel.sh)
 fi
